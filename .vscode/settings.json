@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "dense": "cpp",
+        "core": "cpp",
+        "superlusupport": "cpp",
+        "*.evaluator": "cpp",
+        "*.traits": "cpp",
+        "adolcforward": "cpp",
+        "alignedvector3": "cpp",
+        "autodiff": "cpp",
+        "bvh": "cpp",
+        "eulerangles": "cpp",
+        "fft": "cpp",
+        "kroneckerproduct": "cpp",
+        "mprealsupport": "cpp",
+        "nnls": "cpp",
+        "numericaldiff": "cpp",
+        "openglsupport": "cpp",
+        "specialfunctions": "cpp",
+        "splines": "cpp",
+        "cmath": "cpp",
+        "cholesky": "cpp",
+        "eigenvalues": "cpp",
+        "geometry": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "/home/cid/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc"
+}

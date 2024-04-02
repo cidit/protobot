@@ -16,7 +16,16 @@ public:
 
     /**
      * expects speed between -1 and 1
-    */
+     */
     void setSpeed(float speed);
 };
 
+class WheelSystem
+{
+private:
+    Motor _left, _right;
+
+public:
+    WheelSystem(Motor left, Motor right);
+    // void setMovement(Eigen::Vector3d movement);
+};

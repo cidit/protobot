@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 
+
 Motor::Motor(int speed_pin, int clockwise_pin, int counter_clockwise_pin) : _speed_pin(speed_pin), _clockwise_pin(clockwise_pin), _counter_clockwise_pin(counter_clockwise_pin) {}
 
 void Motor::begin()
@@ -44,3 +45,9 @@ void Motor::setSpeed(float speed)
     auto pwm_speed = int(magnitude * PWM_MAX_VALUE);
     analogWrite(this->_speed_pin, pwm_speed);
 }
+
+WheelSystem::WheelSystem(Motor left, Motor right): _left(left), _right(right) {}
+
+// void WheelSystem::setMovement(Eigen::Vector3d movement) {
+    
+// }
