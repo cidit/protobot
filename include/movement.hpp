@@ -1,4 +1,5 @@
 #pragma once
+#include "math.hpp"
 
 class Motor
 {
@@ -12,7 +13,7 @@ private:
 public:
     Motor(int speed_pin, int clockwise_pin, int counter_clockwise_pin);
     void begin();
-    void stop();
+    void halt();
 
     /**
      * expects speed between -1 and 1
@@ -27,5 +28,7 @@ private:
 
 public:
     WheelSystem(Motor left, Motor right);
-    // void setMovement(Eigen::Vector3d movement);
+    void begin();
+    void setMovement(Vector movement);
+    void halt();
 };
