@@ -20,4 +20,5 @@ bool Ultrasound::sample(Meters &out)
     digitalWrite(this->_trigger_pin, LOW);
     float fdist = pulseIn(this->_echo_pin, HIGH);
     out = fdist / 58 * 100;
+    return true;
 }
