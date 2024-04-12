@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 
-typedef struct Vector
+struct Vector
 {
     float x, y;
 };

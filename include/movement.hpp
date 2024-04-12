@@ -20,7 +20,7 @@ public:
     /**
      * expects speed between -1 and 1
      */
-    void setSpeed(float speed);
+    virtual void setSpeed(float speed);
     /**
      * will automatically rectify to a number between 0 and 1
     */
@@ -28,10 +28,17 @@ public:
     float getCalibration();
 };
 
+// TODO: TRY TO MAKE THAT WORK?
+// class InvertedMotor: public Motor {
+//     public:
+//         void setSpeed(float speed) override;
+// };
+
 class WheelSystem
 {
 private:
-    Motor _left, _right;
+    Motor _left;
+    Motor _right;
 
 public:
     WheelSystem(Motor left, Motor right);

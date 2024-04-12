@@ -3,7 +3,7 @@
 
 Motor::Motor(int speed_pin, int clockwise_pin, int counter_clockwise_pin) : _speed_pin(speed_pin), _clockwise_pin(clockwise_pin), _counter_clockwise_pin(counter_clockwise_pin)
 {
-    this->_calibration = 0;
+    this->_calibration = 1;
 }
 
 Motor::Motor(int speed_pin, int clockwise_pin, int counter_clockwise_pin, float calibration)
@@ -81,6 +81,11 @@ float Motor::getCalibration() {
     return this->_calibration;
 }
 
+// TODO: make this work type wise in movement.hpp first
+// void InvertedMotor::setSpeed(float speed) {
+//     this->Motor::setSpeed(-speed);
+// }
+
 WheelSystem::WheelSystem(Motor left, Motor right) : _left(left), _right(right) {}
 
 void WheelSystem::begin()
@@ -91,11 +96,10 @@ void WheelSystem::begin()
 
 void WheelSystem::setMovement(Vector movement)
 {
-    movement = normalize(movement);
-    auto fastest = movement.y;
-    auto slowest = movement.y > 0
-                       ? 1 - abs(movement.x)
-                       : -1 + abs(movement.x);
+
+    auto slowest = movement.x;
+    auto fastest = hypot(movement.x, movement.y) * (movement.y / abs(movement.y));
+
     if (movement.x > 0)
     {
         this->_left.setSpeed(-fastest);
