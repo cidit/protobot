@@ -2,7 +2,7 @@
 #include "movement.hpp"
 #include <TaskScheduler.h>
 #include "ultrasound.hpp"
-#include "ir_receiver.hpp"
+#include "communication.hpp"
 
 #define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between runs if no callback methods were invoked during the pass
 #define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
@@ -15,7 +15,7 @@ WheelSystem wheels(leftMotor, rightMotor);
 
 Ultrasound ultrasound(2, 3);
 
-const int IR_PIN = 4;
+// #define IR_PIN 4
 
 #elif TARGET_ESP // bidon, je ne le supporte pas encore
 
@@ -25,7 +25,7 @@ WheelSystem wheels{leftMotor, rightMotor};
 
 Ultrasound ultrasound(1, 2);
 
-const int IR_PIN = 23;
+// #define IR_PIN 23
 
 #else // bidon, tant que ca compile
 
@@ -33,7 +33,7 @@ Motor leftMotor{1, 2, 3};
 Motor rightMotor{1, 2, 3};
 WheelSystem wheels{leftMotor, rightMotor};
 
-const int IR_PIN = 23;
+// #define IR_PIN 23
 
 #endif
 
@@ -97,9 +97,11 @@ Task process_remote_command(
   1*TASK_MILLISECOND,
   TASK_FOREVER,
   [](){
-    int code;
-    // bool success = Infrared::getInstance().sample(code);
-    
+    REMOTE_BUTTON_CODES code;
+    if (!getCodeFromRemote(code)) {
+      return;
+    } 
+    Serial.println(getButtonName(code));
   }
 );
 
@@ -108,9 +110,11 @@ void setup()
   Serial.begin(115200);
   wheels.begin();
   ultrasound.begin();
+  initRemote(4);
   ts.addTask(alternate_rotation_direction);
   // ts.addTask(change_speed);
-  ts.addTask(collect_ultrasound_distance_and_print_to_serial);
+  // ts.addTask(collect_ultrasound_distance_and_print_to_serial);
+  ts.addTask(process_remote_command);
   ts.addTask(health_check);
   ts.enableAll();
 }
@@ -118,14 +122,4 @@ void setup()
 void loop()
 {
   ts.execute();
-  // Serial.println("im alive");
-  // auto current_millis = millis();
-
-  // if (current_millis % 1000 == 0)
-  // {
-  //   current_direction = reverse(current_direction);
-  // }
-  // auto speed = (current_millis % 1000 / 1000.0) * variation(current_direction);
-  // motor.setSpeed(speed);
-  // Serial.println("s:" + String(speed) + " d:" + current_direction);
 }
