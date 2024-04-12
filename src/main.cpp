@@ -101,7 +101,7 @@ Task process_remote_command(
     // bool success = Infrared::getInstance().sample(code);
     
   }
-)
+);
 
 void setup()
 {
