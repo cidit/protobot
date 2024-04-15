@@ -1,3 +1,5 @@
+#ifdef USING_PIO
+
 #include <Arduino.h>
 #include "movement.hpp"
 #include <TaskScheduler.h>
@@ -123,3 +125,5 @@ void loop()
 {
   ts.execute();
 }
+
+#endif
