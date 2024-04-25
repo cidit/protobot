@@ -1,5 +1,4 @@
 #pragma once
-#include "math.hpp"
 
 class Motor
 {
@@ -26,28 +25,4 @@ public:
     */
     void setCalibration(float calibration);
     float getCalibration();
-};
-
-// TODO: TRY TO MAKE THAT WORK?
-// class InvertedMotor: public Motor {
-//     public:
-//         void setSpeed(float speed) override;
-// };
-
-class WheelSystem
-{
-private:
-    Motor _left;
-    Motor _right;
-
-public:
-    WheelSystem(Motor left, Motor right);
-    void begin();
-    void setMovement(Vector movement);
-    void setSpeeds(float left_speed, float right_speed);
-    /**
-     * remplis devis
-    */
-    void tourner(float vitesseG, float vitesseD);
-    void halt();
 };

@@ -1,6 +1,8 @@
-#include "communication.hpp"
+#include "remote.hpp"
 #include "IRremote.hpp"
 #include <Arduino.h>
+
+bool has_begun = false;
 
 String getButtonName(REMOTE_BUTTON_CODES code)
 {
@@ -55,7 +57,11 @@ String getButtonName(REMOTE_BUTTON_CODES code)
 
 void initRemote(int receiver_pin)
 {
+    if (has_begun) {
+        Serial.println("Remote has already been begun");
+    }
     IrReceiver.begin(receiver_pin);
+    has_begun = true;
 }
 
 bool getCodeFromRemote(REMOTE_BUTTON_CODES &out_code)

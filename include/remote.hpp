@@ -32,13 +32,3 @@ String getButtonName(REMOTE_BUTTON_CODES code);
 
 void initRemote(int receiver_pin);
 bool getCodeFromRemote(REMOTE_BUTTON_CODES &out_code);
-
-/**
- * DEVIS
- */
-void initTelecommande();
-
-/**
- * DEVIS
- */
-long getCodeRecu();

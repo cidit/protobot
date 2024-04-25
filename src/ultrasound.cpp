@@ -18,7 +18,7 @@ bool Ultrasound::sample(Meters &out)
     digitalWrite(this->_trigger_pin, HIGH);
     delayMicroseconds(10);
     digitalWrite(this->_trigger_pin, LOW);
-    float fdist = pulseIn(this->_echo_pin, HIGH);
-    out = (fdist / 58) * 10;
+    float cm_dist = pulseIn(this->_echo_pin, HIGH);
+    out = (cm_dist / 58) / 100;
     return true;
 }

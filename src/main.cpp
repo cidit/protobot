@@ -1,15 +1,15 @@
-#ifdef USING_PIO
 
 #include <Arduino.h>
-#include "movement.hpp"
 #include <TaskScheduler.h>
+#include "wheel_system.hpp"
 #include "ultrasound.hpp"
-#include "communication.hpp"
+#include "remote.hpp"
 
-#define _TASK_SLEEP_ON_IDLE_RUN // Enable 1 ms SLEEP_IDLE powerdowns between runs if no callback methods were invoked during the pass
-#define _TASK_STATUS_REQUEST    // Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only
+// Enable 1 ms SLEEP_IDLE powerdowns between runs if no callback methods were invoked during the pass
+#define _TASK_SLEEP_ON_IDLE_RUN
+// Compile with support for StatusRequest functionality - triggering tasks on status change events in addition to time only 
+#define _TASK_STATUS_REQUEST
 
-#ifdef TARGET_UNO
 
 Motor leftMotor{6, A0, A1};
 Motor rightMotor{5, A2, A3};
@@ -17,27 +17,7 @@ WheelSystem wheels(leftMotor, rightMotor);
 
 Ultrasound ultrasound(2, 3);
 
-// #define IR_PIN 4
-
-#elif TARGET_ESP // bidon, je ne le supporte pas encore
-
-Motor leftMotor{1, 2, 3};
-Motor rightMotor{1, 2, 3};
-WheelSystem wheels{leftMotor, rightMotor};
-
-Ultrasound ultrasound(1, 2);
-
-// #define IR_PIN 23
-
-#else // bidon, tant que ca compile
-
-Motor leftMotor{1, 2, 3};
-Motor rightMotor{1, 2, 3};
-WheelSystem wheels{leftMotor, rightMotor};
-
-// #define IR_PIN 23
-
-#endif
+const int IR_PIN = 4;
 
 Scheduler ts;
 
@@ -112,7 +92,7 @@ void setup()
   Serial.begin(115200);
   wheels.begin();
   ultrasound.begin();
-  initRemote(4);
+  initRemote(IR_PIN);
   ts.addTask(alternate_rotation_direction);
   // ts.addTask(change_speed);
   // ts.addTask(collect_ultrasound_distance_and_print_to_serial);
@@ -125,5 +105,3 @@ void loop()
 {
   ts.execute();
 }
-
-#endif
